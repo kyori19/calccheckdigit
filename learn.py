@@ -42,8 +42,16 @@ def do(count = 5000, stop = True):
 
 def check():
     result = sess.run(y, feed_dict = { X: test_x })
+    print("  Actual - Predict")
     for i in range(result.shape[0]):
-        print("actual: " + num2alpha(int(test_y[i, 0])) + " predict: " + num2alpha(int(round(result[i, 0]))) + "(" + str(result[i, 0]) + ")")
+        actual = num2alpha(int(test_y[i, 0]))
+        num = result[i, 0]
+        predict = num2alpha(int(round(num)))
+        if actual == predict:
+            check = "\033[32mO"
+        else:
+            check = "\033[31mX"
+        print(check + "   " + actual + "    -    " + predict + " (" + str(num) + ")\033[0m")
 
 def save():
     saver = tf.compat.v1.train.Saver()
